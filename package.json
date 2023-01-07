@@ -1,0 +1,26 @@
+{
+  "name": "firtcode",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anjaligurjar/firtcode.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/anjaligurjar/firtcode/issues"
+  },
+  "homepage": "https://github.com/anjaligurjar/firtcode#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "json": "^11.0.0",
+    "mongo": "^0.1.0",
+    "token": "^0.1.0",
+    "web": "^0.0.2"
+  }
+}
