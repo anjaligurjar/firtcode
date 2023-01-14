@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('./user.db.js');
 const UserModel = require('./user.model');
 const userAuth = require('./user.auth');
+const forgetpas=require('./user.nodemiler')
 const { JsonWebTokenError, verify } = require('jsonwebtoken');
 const router = express.Router();
 router.post('/register', (req, res) => {
@@ -45,25 +46,9 @@ router.get('/userinfo', userAuth.extractToken, userAuth.verifyToken, (req, res, 
     // req.auth // scheme, token, user
     res.json(req.auth.user);
 })
-router.post('/forgetpass', (req, res, next) => {
-    const {email}=req.body
-    UserModel.findOne({email},(error,user)=>{
-        if(error||!user){
-            res.json({
-                status:400 ,
-                message:'user does not exist'
-            })
-
-        }
-        else{
-            res.json({
-                status:400 ,
-                message:'user does not exist'
-            })
-        }
-    })
-       
-    })
+router.post('/forgetpassword',forgetpas.forgetpassword,(req,res)=>{
+    res.json("password reset")
+})
 
      
 
