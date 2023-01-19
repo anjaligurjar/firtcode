@@ -1,63 +1,52 @@
 const UserModel = require('./user.model')
 const config = require('./config.user')
 const nodemailer = require('nodemailer');
-const randomString = require('randomstring')
+
 const SendmailTransport = require('nodemailer/lib/sendmail-transport');
+console.log(config)
+
+const sendresetpasswordmail = async (email) => {
+
+  const transporter = nodemailer.createTransport({
+    auth: {
+      pass: 'udqpmgwuoeexlpas', // generated ethereal password
+      user: 'ashishgurjar49@gmail.com', // generated ethereal user
+    },
+    service: 'gmail',
+  });
 
 
-const sendresetpasswordmail = async (name, mail, token) => {
-  try {
-    const transporter = nodemailer.createTransport({
-      host: 'SMTP.gamil.com',
-      PORT: 587,
-      SECURE: false,
-      requireTSL: true,
-      auth: {
-        user: config.emailUser,
-        pass: config.passwordUser
-      }
-    
-    });
-  
-    const info = await transporter.sendMail({
-      from: config.emailUser,
 
-      to: "anjali.gujrar@hcl.com",
 
-      subject: " reset password",
-      html: "<b>http:127.0.0.1</b>"
-    })
+  const detailes = {
+    from: "ashishgurjar49@gmail.com",
+    subject: " reset password",
+    html: "<b>helloworld</b><a href='http://localhost:3000/verify-password'>click</a>",
+
+    to: email
+
   }
-    catch(error){}
+  var info = await transporter.sendMail(detailes, (info))
 
-    
-    console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info))
-    
+
+  console.log(info.messageId);
+
+
+
+ 
 
 }
 
-    const forgetpassword = async (req, res) => {
-      try {
-        const userdata = await UserModel.findOne({ email: req.body.email })
-        if (userdata) {
-          const randomstring = randomString.generate({ email: req.body.email })
-          const data = await UserModel.updateOne({ email: req.body.email }, { $set: { token: randomstring } })
-          sendresetpasswordmail(userdata.name, userdata.email, randomstring, data)
-
-        } else {
-          res.status(200).send({ succesfull: true, messagge: "this is not exist" })
-
-        }
-      }
-      catch (error) {
-        res.status(400).send({ succesfull: false, messagge: error.message })
-
-      }
-
-    }
 
 
-  
+
+module.exports = { sendresetpasswordmail }
 
 
-    module.exports = {forgetpassword }
+
+
+
+
+
+
+

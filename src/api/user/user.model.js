@@ -16,7 +16,10 @@ const userSchema=new mongoose.Schema({
     id:{
         type:String
     },
-    resetpassword:{
+    password:{
+        type:String
+    },
+    newpassword:{
         type:String
     },
     Token:{

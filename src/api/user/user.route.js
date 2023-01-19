@@ -41,15 +41,52 @@ router.get('/login', (req, res) => {
 
     });
 });
+router.post('/changepassword',(req,res)=>{
+    UserModel.findOne(req.body.firstname,(err,user)=>{
+        if(err){
+            res.send(err)
+        }
+        else {
+           const pass= user.changePassword(req.body.password, 
+            req.body.newpassword, function (err) {
+                console.log(pass)
+                if (err) {
+                    res.send(err);
+                } else {
+                    res.send('successfully change password')
+                }
+                
 
+            }
+            )
+        }})
+})
 router.get('/userinfo', userAuth.extractToken, userAuth.verifyToken, (req, res, next) => {
     // req.auth // scheme, token, user
     res.json(req.auth.user);
 })
-router.post('/forgetpassword',forgetpas.forgetpassword,(req,res)=>{
-    res.json("password reset")
+
+router.post('/forgetpassword' ,(req,res)=>{
+    forgetpas.sendresetpasswordmail(req.body.email).then(()=>{
+        res.send('email send mail successfull')
+    }).catch(error=>{
+        res.send('email send failed')
+        console.log('email send failed',error)
+    })
+
+
+   
+    
 })
 
+router.post('/adduserlist',(req,res)=>{
+
+})
+
+router.get('/verify-password',(req,res)=>{
+    res.send('pasword verify succesfully')
+
+})
      
 
 
